@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="color_primary">@color/black_elevated</color>
+    <color name="color_primary_dark">@color/black</color>
+    <color name="color_accent">@color/blue_light</color>
+    <color name="color_surface">@color/black_elevated</color>
+
     <color name="list_item_date_background_color">@color/blue_light</color>
+
 </resources>

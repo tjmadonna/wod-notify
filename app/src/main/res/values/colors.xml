@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="color_primary">@color/blue_regular</color>
+    <color name="color_primary_dark">@color/blue_dark</color>
+    <color name="color_accent">@color/black</color>
+    <color name="color_surface">@color/white</color>
+
+    <color name="list_item_date_background_color">@color/blue_regular</color>
+
+
     <color name="blue_regular">#0077C8</color>
     <color name="blue_dark">#005fa0</color>
     <color name="blue_light">#3292d3</color>
 
     <color name="black">#000000</color>
-    <color name="black_elevated">#232323</color>
+    <color name="black_elevated">#1F1F1F</color>
     <color name="white">#FFFFFF</color>
-
-    <color name="list_item_date_background_color">@color/blue_regular</color>
 </resources>
