@@ -1,7 +1,7 @@
 package com.madonnaapps.wodnotify.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.madonnaapps.wodnotify.R
 
