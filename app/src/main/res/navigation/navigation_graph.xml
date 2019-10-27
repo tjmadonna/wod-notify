@@ -2,6 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_graph"">
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/fragment_wods">
+
+    <fragment
+        android:id="@+id/fragment_wods"
+        android:name="com.madonnaapps.wodnotify.ui.wods.WodsFragment"
+        android:label="fragment_wods"
+        tools:layout="@layout/fragment_wods" />
 
 </navigation>
