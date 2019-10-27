@@ -1,5 +1,6 @@
 package com.madonnaapps.wodnotify.data.remote
 
+import android.util.Log
 import com.madonnaapps.wodnotify.data.local.entities.WodEntity
 import com.madonnaapps.wodnotify.data.remote.mappers.WodNetworkResponseItemMapper
 import com.madonnaapps.wodnotify.data.remote.services.WodRemoteService
@@ -18,9 +19,15 @@ class WodRemoteDataSourceImpl constructor(
 ) : WodRemoteDataSource {
 
     override suspend fun getWods(): List<WodEntity> = withContext(Dispatchers.IO) {
-        return@withContext wodRemoteService.getWods().items?.let {
-            it.mapNotNull { item -> mapper.mapToWodEntity(item) }
-        } ?: kotlin.run {
+
+        return@withContext try {
+            wodRemoteService.getWods().items?.let {
+                it.mapNotNull { item -> mapper.mapToWodEntity(item) }
+            } ?: kotlin.run {
+                emptyList<WodEntity>()
+            }
+        } catch (e: Exception) {
+            Log.e("WodRemoteDataSource", e.localizedMessage, e)
             emptyList<WodEntity>()
         }
     }
