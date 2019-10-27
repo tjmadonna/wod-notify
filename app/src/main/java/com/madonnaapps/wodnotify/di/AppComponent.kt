@@ -1,11 +1,15 @@
 package com.madonnaapps.wodnotify.di
 
 import android.app.Application
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.madonnaapps.wodnotify.data.WodRepository
 import com.madonnaapps.wodnotify.data.WodRepositoryImpl
 import com.madonnaapps.wodnotify.data.local.WodLocalDataSource
 import com.madonnaapps.wodnotify.data.local.WodLocalDataSourceImpl
 import com.madonnaapps.wodnotify.data.local.databases.AppDatabase
+import com.madonnaapps.wodnotify.data.preferences.SharedPreferencesDataSource
+import com.madonnaapps.wodnotify.data.preferences.SharedPreferencesDataSourceImpl
 import com.madonnaapps.wodnotify.data.remote.WodRemoteDataSource
 import com.madonnaapps.wodnotify.data.remote.WodRemoteDataSourceImpl
 import com.madonnaapps.wodnotify.data.remote.mappers.WodNetworkResponseItemMapper
@@ -26,7 +30,7 @@ class AppComponentImpl constructor(
 ) : AppComponent {
 
     override val wodRepository: WodRepository by lazy {
-        WodRepositoryImpl(wodLocalDataSource, wodRemoteDataSource)
+        WodRepositoryImpl(wodLocalDataSource, wodRemoteDataSource, sharedPreferencesDataSource)
     }
 
     // Local Data
@@ -60,4 +64,15 @@ class AppComponentImpl constructor(
         WodRemoteDataSourceImpl(wodRemoteService, wodRemoteMapper)
     }
 
+    // Shared Preferences
+
+    private val sharedPreferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(application)
+    }
+
+    private val sharedPreferencesDataSource: SharedPreferencesDataSource by lazy {
+        SharedPreferencesDataSourceImpl(
+            sharedPreferences
+        )
+    }
 }
