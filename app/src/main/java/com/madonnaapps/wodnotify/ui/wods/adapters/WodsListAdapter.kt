@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.madonnaapps.wodnotify.R
 import com.madonnaapps.wodnotify.data.local.entities.WodEntity
 import kotlinx.android.synthetic.main.list_item_wods.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WodsListAdapter(
     private val interaction: Interaction? = null
@@ -17,11 +19,13 @@ class WodsListAdapter(
     private val diffCallback = object : DiffUtil.ItemCallback<WodEntity>() {
 
         override fun areItemsTheSame(oldItem: WodEntity, newItem: WodEntity): Boolean {
-            TODO("not implemented")
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: WodEntity, newItem: WodEntity): Boolean {
-            TODO("not implemented")
+            return oldItem.title == newItem.title &&
+                    oldItem.author == newItem.author &&
+                    oldItem.date == newItem.date
         }
 
     }
@@ -56,6 +60,14 @@ class WodsListAdapter(
         differ.submitList(list)
     }
 
+    companion object {
+        @JvmStatic
+        private val MONTH_DATE_FORMAT = SimpleDateFormat("MMM", Locale.US)
+
+        @JvmStatic
+        private val DAY_DATE_FORMAT = SimpleDateFormat("d", Locale.US)
+    }
+
     class ViewHolder constructor(
         itemView: View,
         private val interaction: Interaction?
@@ -68,6 +80,8 @@ class WodsListAdapter(
 
             itemView.tv_wod_item_title.text = item.title
             itemView.tv_wod_item_author.text = item.author
+            itemView.tv_wod_item_month.text = MONTH_DATE_FORMAT.format(item.date)
+            itemView.tv_wod_item_day.text = DAY_DATE_FORMAT.format(item.date)
         }
     }
 
