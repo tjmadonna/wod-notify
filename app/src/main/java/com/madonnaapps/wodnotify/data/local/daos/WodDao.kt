@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WodDao {
 
-    @Query("SELECT * FROM wods ORDER BY date ASC")
+    @Query("SELECT * FROM wods ORDER BY date DESC")
     fun getAllWods(): Flow<List<WodEntity>>
 
     @Query("SELECT * FROM wods WHERE id = :id")
