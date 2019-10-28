@@ -1,5 +1,5 @@
 # App Specific
-keystore.gradle
+keystore.properties
 
 # Built application files
 *.apk
