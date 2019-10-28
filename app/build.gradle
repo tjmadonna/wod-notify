@@ -16,6 +16,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Import urls from keystore.properties file
+    def keystorePropertiesFile = rootProject.file("keystore.properties")
+    def keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'BASE_URL', keystoreProperties['BaseUrl']
+        it.buildConfigField 'String', 'WODS_URL_PATH', keystoreProperties['WodsUrlPath']
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -66,6 +76,9 @@ dependencies {
     // Moshi
     implementation "com.squareup.moshi:moshi:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+    // Custom Tabs
+    implementation "androidx.browser:browser:$browser_version"
 
 
     // Testing

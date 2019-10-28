@@ -3,6 +3,7 @@ package com.madonnaapps.wodnotify.di
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.madonnaapps.wodnotify.BuildConfig
 import com.madonnaapps.wodnotify.data.WodRepository
 import com.madonnaapps.wodnotify.data.WodRepositoryImpl
 import com.madonnaapps.wodnotify.data.local.WodLocalDataSource
@@ -47,7 +48,7 @@ class AppComponentImpl constructor(
 
     private val wodRemoteService by lazy {
         Retrofit.Builder()
-            .baseUrl("https://www.crossfitathletics.com/")
+            .baseUrl("${BuildConfig.BASE_URL}/")
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(WodRemoteService::class.java)
@@ -56,7 +57,7 @@ class AppComponentImpl constructor(
     private val wodRemoteMapper by lazy {
         WodNetworkResponseItemMapper(
             arrayOf(SimpleDateFormat("MMddyyyy", Locale.US)),
-            "https://www.crossfitathletics.com/wods"
+            BuildConfig.BASE_URL
         )
     }
 

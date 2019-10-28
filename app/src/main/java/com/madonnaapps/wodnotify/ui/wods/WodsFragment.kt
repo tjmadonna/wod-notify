@@ -1,10 +1,13 @@
 package com.madonnaapps.wodnotify.ui.wods
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +32,7 @@ class WodsFragment : Fragment() {
 
     private val listAdapter = WodsListAdapter(object : WodsListAdapter.Interaction {
         override fun onItemSelected(position: Int, item: WodEntity) {
-            Log.d("WodsFragment", "${item.title} selected")
+            openInBrowser(item)
         }
     })
 
@@ -56,6 +59,38 @@ class WodsFragment : Fragment() {
         viewModel.wods.observe(viewLifecycleOwner, Observer { wods ->
             listAdapter.submitList(wods)
         })
+    }
+
+    private fun openInBrowser(item: WodEntity) {
+
+        val intentBuilder = CustomTabsIntent.Builder()
+        intentBuilder.setShowTitle(true)
+        intentBuilder.setStartAnimations(
+            requireContext(),
+            R.anim.slide_in_right,
+            R.anim.slide_out_left
+        )
+        intentBuilder.setExitAnimations(
+            requireContext(),
+            R.anim.slide_in_left,
+            R.anim.slide_out_right
+        )
+        intentBuilder.setShowTitle(true)
+        intentBuilder.setToolbarColor(
+            ContextCompat.getColor(requireContext(), R.color.color_primary)
+        )
+
+        ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back_24dp)
+            ?.toBitmap()
+            ?.let {
+                intentBuilder.setCloseButtonIcon(it)
+            }
+
+        intentBuilder.build()
+            .launchUrl(
+                requireContext(),
+                Uri.parse(item.url)
+            )
     }
 
 }
