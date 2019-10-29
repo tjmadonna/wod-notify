@@ -1,5 +1,8 @@
 package com.madonnaapps.wodnotify.data
 
+import android.util.Log
+import com.madonnaapps.wodnotify.common.extensions.logTag
+import com.madonnaapps.wodnotify.common.types.Result
 import com.madonnaapps.wodnotify.data.local.WodLocalDataSource
 import com.madonnaapps.wodnotify.data.local.entities.WodEntity
 import com.madonnaapps.wodnotify.data.preferences.SharedPreferencesDataSource
@@ -29,9 +32,16 @@ class WodRepositoryImpl constructor(
 
         if (currentTime - sharedPreferencesDataSource.getLastWodSync() > 900000) {
             // Only check if it's been 15 minutes since the last sync
-            val remoteItems = wodRemoteDataSource.getWods()
-            wodLocalDataSource.insertWods(remoteItems)
-            sharedPreferencesDataSource.saveLastWodSync(currentTime)
+
+            when (val result = wodRemoteDataSource.getWods()) {
+                is Result.Success -> {
+                    wodLocalDataSource.insertWods(result.data)
+                    sharedPreferencesDataSource.saveLastWodSync(currentTime)
+                }
+                is Result.Failure -> {
+                    Log.e(logTag, result.throwable.localizedMessage, result.throwable)
+                }
+            }
         }
 
         return@withContext wodLocalDataSource.getAllWods()
