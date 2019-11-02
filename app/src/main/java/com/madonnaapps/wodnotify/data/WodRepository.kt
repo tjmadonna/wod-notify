@@ -44,7 +44,7 @@ class WodRepositoryImpl constructor(
             }
         }
 
-        return@withContext wodLocalDataSource.getAllWods()
+        return@withContext wodLocalDataSource.getAllWodsAsFlow()
     }
 
     override suspend fun getWodById(id: String): WodEntity = withContext(Dispatchers.IO) {

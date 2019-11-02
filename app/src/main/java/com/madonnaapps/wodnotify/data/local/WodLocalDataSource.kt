@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface WodLocalDataSource {
 
-    suspend fun getAllWods(): Flow<List<WodEntity>>
+    suspend fun getAllWodsAsFlow(): Flow<List<WodEntity>>
 
     suspend fun getWodById(id: String): WodEntity
 
@@ -18,7 +18,7 @@ class WodLocalDataSourceImpl constructor(
     private val wodDao: WodDao
 ) : WodLocalDataSource {
 
-    override suspend fun getAllWods(): Flow<List<WodEntity>> = wodDao.getAllWods()
+    override suspend fun getAllWodsAsFlow(): Flow<List<WodEntity>> = wodDao.getAllWodsAsFlow()
 
     override suspend fun getWodById(id: String): WodEntity = wodDao.getWodById(id)
 
