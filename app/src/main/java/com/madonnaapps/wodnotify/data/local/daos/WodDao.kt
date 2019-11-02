@@ -13,6 +13,9 @@ interface WodDao {
     @Query("SELECT * FROM wods ORDER BY date DESC")
     fun getAllWodsAsFlow(): Flow<List<WodEntity>>
 
+    @Query("SELECT * FROM wods ORDER BY date DESC")
+    fun getAllWods(): List<WodEntity>
+
     @Query("SELECT * FROM wods WHERE id = :id")
     suspend fun getWodById(id: String): WodEntity
 
