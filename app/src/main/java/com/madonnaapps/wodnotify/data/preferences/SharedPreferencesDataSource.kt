@@ -3,6 +3,8 @@ package com.madonnaapps.wodnotify.data.preferences
 import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface SharedPreferencesDataSource {
 
@@ -12,7 +14,8 @@ interface SharedPreferencesDataSource {
 
 }
 
-class SharedPreferencesDataSourceImpl(
+@Singleton
+class SharedPreferencesDataSourceImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : SharedPreferencesDataSource {
 

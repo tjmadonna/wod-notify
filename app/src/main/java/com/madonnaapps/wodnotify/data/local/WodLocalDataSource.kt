@@ -3,6 +3,8 @@ package com.madonnaapps.wodnotify.data.local
 import com.madonnaapps.wodnotify.data.local.daos.WodDao
 import com.madonnaapps.wodnotify.data.local.entities.WodEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface WodLocalDataSource {
 
@@ -16,7 +18,8 @@ interface WodLocalDataSource {
 
 }
 
-class WodLocalDataSourceImpl constructor(
+@Singleton
+class WodLocalDataSourceImpl @Inject constructor(
     private val wodDao: WodDao
 ) : WodLocalDataSource {
 

@@ -7,8 +7,9 @@ import com.madonnaapps.wodnotify.data.WodRepository
 import com.madonnaapps.wodnotify.data.local.entities.WodEntity
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WodsViewModel(
+class WodsViewModel @Inject constructor(
     private val wodRepository: WodRepository
 ) : ViewModel() {
 

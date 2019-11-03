@@ -6,6 +6,8 @@ import com.madonnaapps.wodnotify.data.remote.mappers.WodNetworkResponseItemMappe
 import com.madonnaapps.wodnotify.data.remote.services.WodRemoteService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface WodRemoteDataSource {
 
@@ -13,7 +15,8 @@ interface WodRemoteDataSource {
 
 }
 
-class WodRemoteDataSourceImpl constructor(
+@Singleton
+class WodRemoteDataSourceImpl @Inject constructor(
     private val wodRemoteService: WodRemoteService,
     private val mapper: WodNetworkResponseItemMapper
 ) : WodRemoteDataSource {

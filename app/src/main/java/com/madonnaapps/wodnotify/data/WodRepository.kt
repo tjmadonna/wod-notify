@@ -11,6 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface WodRepository {
 
@@ -20,7 +22,8 @@ interface WodRepository {
 
 }
 
-class WodRepositoryImpl constructor(
+@Singleton
+class WodRepositoryImpl @Inject constructor(
     private val wodLocalDataSource: WodLocalDataSource,
     private val wodRemoteDataSource: WodRemoteDataSource,
     private val sharedPreferencesDataSource: SharedPreferencesDataSource

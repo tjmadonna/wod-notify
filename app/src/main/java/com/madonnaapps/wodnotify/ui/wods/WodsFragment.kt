@@ -1,5 +1,6 @@
 package com.madonnaapps.wodnotify.ui.wods
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,31 +11,41 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.madonnaapps.wodnotify.R
-import com.madonnaapps.wodnotify.common.extensions.buildViewModel
+import com.madonnaapps.wodnotify.common.extensions.appComponent
 import com.madonnaapps.wodnotify.data.local.entities.WodEntity
-import com.madonnaapps.wodnotify.di.WodsFragmentComponent
-import com.madonnaapps.wodnotify.di.WodsFragmentComponentImpl
 import com.madonnaapps.wodnotify.ui.wods.adapters.WodsListAdapter
 import kotlinx.android.synthetic.main.fragment_wods.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] for displaying wods in a list.
  */
 class WodsFragment : Fragment() {
 
-    private val component: WodsFragmentComponent by lazy {
-        WodsFragmentComponentImpl(this)
-    }
+    @Inject
+    lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
-    private val viewModel by buildViewModel { component.viewModel }
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, viewModelProviderFactory)
+            .get(WodsViewModel::class.java)
+    }
 
     private val listAdapter = WodsListAdapter(object : WodsListAdapter.Interaction {
         override fun onItemSelected(position: Int, item: WodEntity) {
             openInBrowser(item)
         }
     })
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        appComponent.wodsFragmentComponentFactory()
+            .create()
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
