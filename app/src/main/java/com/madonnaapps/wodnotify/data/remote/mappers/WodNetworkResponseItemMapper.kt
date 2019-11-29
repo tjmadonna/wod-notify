@@ -6,12 +6,18 @@ import com.madonnaapps.wodnotify.data.remote.models.WodNetworkResponseItem
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class WodNetworkResponseItemMapper(
+interface WodNetworkResponseItemMapper {
+
+    fun mapToWodEntity(responseItem: WodNetworkResponseItem): WodEntity?
+
+}
+
+class WodNetworkResponseItemMapperImpl(
     private val dateFormats: Array<SimpleDateFormat>,
     private val baseUrl: String
-) {
+): WodNetworkResponseItemMapper {
 
-    fun mapToWodEntity(responseItem: WodNetworkResponseItem): WodEntity? {
+    override fun mapToWodEntity(responseItem: WodNetworkResponseItem): WodEntity? {
         return WodEntity(
             responseItem.id ?: return null,
             convertTextToDate(responseItem.title) ?: return null,
