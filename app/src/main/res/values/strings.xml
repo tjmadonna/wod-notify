@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Wod Notify</string>
+
+    <!-- Plurals -->
+
+    <plurals name="wod_notification_title">
+        <item quantity="one">%s Posted</item>
+        <item quantity="other">%s New Wods Posted</item>
+    </plurals>
+
 </resources>
