@@ -9,6 +9,7 @@ import com.madonnaapps.wodnotify.data.remote.services.WodRemoteService
 import com.madonnaapps.wodnotify.test.WodEntityFactory
 import com.madonnaapps.wodnotify.test.WodNetworkResponseItemFactory
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -17,6 +18,8 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.stubbing.Answer
+import java.io.IOException
 
 class WodRemoteDataSourceImplTest {
 
@@ -26,7 +29,7 @@ class WodRemoteDataSourceImplTest {
     @Mock
     lateinit var mockMapper: WodNetworkResponseItemMapper
 
-    lateinit var remoteDataSource: WodRemoteDataSourceImpl
+    private lateinit var remoteDataSource: WodRemoteDataSourceImpl
 
     @Before
     fun setUp() {
@@ -51,6 +54,26 @@ class WodRemoteDataSourceImplTest {
         for (index in 0..4) {
             assertEquals(expectedEntity, actualEntities[index])
         }
+    }
+
+    @Test
+    fun getWodsWithNullNetworkResponseItemsReturnsFailure() = runBlocking {
+
+        stubWodRemoteServiceGetWods(null)
+
+        val actualResult = remoteDataSource.getWods()
+
+        assertTrue(actualResult is Result.Failure)
+    }
+
+    @Test
+    fun getWodsWodRemoteServiceThrowsErrorReturnsFailure() = runBlocking {
+
+        whenever(mockWodRemoteService.getWods()).doAnswer(Answer { throw IOException() })
+
+        val actualResult = remoteDataSource.getWods()
+
+        assertTrue(actualResult is Result.Failure)
     }
 
     private fun stubWodRemoteServiceGetWods(networkResponse: WodNetworkResponse?) = runBlocking {
