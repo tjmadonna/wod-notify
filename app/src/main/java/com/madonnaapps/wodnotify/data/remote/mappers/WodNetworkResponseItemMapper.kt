@@ -6,7 +6,7 @@ import com.madonnaapps.wodnotify.data.remote.models.WodNetworkResponseItem
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WodNetworkResponseItemMapper(
+open class WodNetworkResponseItemMapper(
     private val dateFormats: Array<SimpleDateFormat>,
     private val baseUrl: String
 ) {
