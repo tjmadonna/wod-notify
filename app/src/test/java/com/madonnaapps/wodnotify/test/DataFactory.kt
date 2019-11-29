@@ -1,6 +1,8 @@
 package com.madonnaapps.wodnotify.test
 
 import java.util.*
+import kotlin.random.Random
+import kotlin.random.nextLong
 
 internal object DataFactory {
 
@@ -10,6 +12,10 @@ internal object DataFactory {
 
     fun randomBoolean(): Boolean {
         return Math.random() < 0.5
+    }
+
+    fun randomDate(): Date {
+        return Date(Random.nextLong(0..Long.MAX_VALUE))
     }
 
 }
