@@ -19,6 +19,7 @@ buildscript {
 
     // Testing
     ext.junit_version = '4.12'
+    ext.mockito_version = '2.2.0'
 
     // Android Testing
     ext.espresso_version = '3.2.0'

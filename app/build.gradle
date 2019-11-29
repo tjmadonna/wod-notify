@@ -100,6 +100,7 @@ dependencies {
     // Testing
     testImplementation "junit:junit:$junit_version"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
 
