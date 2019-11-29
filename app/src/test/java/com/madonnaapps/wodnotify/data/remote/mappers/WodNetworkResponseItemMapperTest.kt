@@ -63,4 +63,19 @@ class WodNetworkResponseItemMapperTest {
         assertNull(actualValue)
     }
 
+    @Test
+    fun mapToWodEntityWithNullRelativeUrlReturnsNull() {
+        // Create test values
+        val testResponseItem = WodNetworkResponseItemFactory.makeWodNetworkResponseItem(
+            title = mmddyyyyDateFormat.format(date),
+            relativeUrl = null
+        )
+
+        // Test
+        val actualValue = mapper.mapToWodEntity(testResponseItem)
+
+        // Assert
+        assertNull(actualValue)
+    }
+
 }
