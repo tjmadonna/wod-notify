@@ -9,9 +9,9 @@ import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WodNetworkResponseItemMapperTest {
+class WodNetworkResponseItemMapperImplTest {
 
-    private lateinit var mapper: WodNetworkResponseItemMapper
+    private lateinit var mapper: WodNetworkResponseItemMapperImpl
     private lateinit var baseUrl: String
     private lateinit var date: Date
 
@@ -26,7 +26,7 @@ class WodNetworkResponseItemMapperTest {
     fun setup() {
         baseUrl = DataFactory.randomString()
         date = Calendar.getInstance().midnightTimeOfCurrentDay
-        mapper = WodNetworkResponseItemMapper(dateFormats, baseUrl)
+        mapper = WodNetworkResponseItemMapperImpl(dateFormats, baseUrl)
     }
 
     @Test
