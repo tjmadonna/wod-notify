@@ -1,6 +1,9 @@
 # App Specific
 keystore.properties
 
+# Release directory
+release/
+
 # Built application files
 *.apk
 *.ap_
