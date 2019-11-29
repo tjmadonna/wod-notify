@@ -4,6 +4,7 @@ import com.madonnaapps.wodnotify.BuildConfig
 import com.madonnaapps.wodnotify.data.remote.WodRemoteDataSource
 import com.madonnaapps.wodnotify.data.remote.WodRemoteDataSourceImpl
 import com.madonnaapps.wodnotify.data.remote.mappers.WodNetworkResponseItemMapper
+import com.madonnaapps.wodnotify.data.remote.mappers.WodNetworkResponseItemMapperImpl
 import com.madonnaapps.wodnotify.data.remote.services.WodRemoteService
 import dagger.Binds
 import dagger.Module
@@ -48,7 +49,7 @@ abstract class RemoteDataModule {
         @Provides
         @JvmStatic
         fun provideWodNetworkResponseItemMapper(): WodNetworkResponseItemMapper {
-            return WodNetworkResponseItemMapper(
+            return WodNetworkResponseItemMapperImpl(
                 arrayOf(SimpleDateFormat("MMddyyyy", Locale.US)),
                 BuildConfig.BASE_URL
             )
