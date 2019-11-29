@@ -18,6 +18,8 @@ interface WodRepository {
 
     suspend fun getAllWods(): Flow<List<WodEntity>>
 
+    suspend fun getNewWods(): Result<List<WodEntity>>
+
     suspend fun getWodById(id: String): WodEntity
 
 }
@@ -48,6 +50,28 @@ class WodRepositoryImpl @Inject constructor(
         }
 
         return@withContext wodLocalDataSource.getAllWodsAsFlow()
+    }
+
+    override suspend fun getNewWods(): Result<List<WodEntity>> = withContext(Dispatchers.IO) {
+
+        // Get wods from remote data source
+        val remoteWodsResult = wodRemoteDataSource.getWods()
+
+        if (remoteWodsResult is Result.Failure)
+            return@withContext remoteWodsResult
+
+        val remoteWods = (remoteWodsResult as Result.Success).data
+
+        val localWodIds = wodLocalDataSource.getAllWods().map { wod -> wod.id }.toHashSet()
+
+        // New wods are not in the local data source
+        val newWods = remoteWods.filter { wod -> !localWodIds.contains(wod.id)  }
+
+        // Save new wods and update last sync time
+        wodLocalDataSource.insertWods(remoteWods)
+        sharedPreferencesDataSource.saveLastWodSync(Date().time)
+
+        return@withContext Result.Success(newWods)
     }
 
     override suspend fun getWodById(id: String): WodEntity = withContext(Dispatchers.IO) {
