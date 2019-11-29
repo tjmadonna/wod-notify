@@ -5,17 +5,25 @@ import com.madonnaapps.wodnotify.data.remote.models.WodNetworkResponseItem
 
 object WodNetworkResponseItemFactory {
 
-    fun makeWodNetworkResponseItem(date: String): WodNetworkResponseItem {
+    fun makeWodNetworkResponseItem(
+        id: String = DataFactory.randomString(),
+        title: String = DataFactory.randomString(),
+        author: WodNetworkResponseAuthor = makeWodNetworkResponseAuthor(),
+        relativeUrl: String = DataFactory.randomString(),
+        description: String = DataFactory.randomString()
+    ): WodNetworkResponseItem {
         return WodNetworkResponseItem(
-            DataFactory.randomString(),
-            date,
-            makeWodNetworkResponseAuthor(),
-            DataFactory.randomString(),
-            DataFactory.randomString()
+            id,
+            title,
+            author,
+            relativeUrl,
+            description
         )
     }
 
-    fun makeWodNetworkResponseAuthor(): WodNetworkResponseAuthor {
+    fun makeWodNetworkResponseAuthor(
+        name: String = DataFactory.randomString()
+    ): WodNetworkResponseAuthor {
         return WodNetworkResponseAuthor(
             DataFactory.randomString()
         )

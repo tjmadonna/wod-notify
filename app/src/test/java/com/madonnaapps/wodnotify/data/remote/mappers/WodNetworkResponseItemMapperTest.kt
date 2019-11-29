@@ -33,7 +33,7 @@ class WodNetworkResponseItemMapperTest {
     fun mapToWodEntityWithMMDDYYYYDateFormatReturnsValue() {
         // Create test values
         val testResponseItem = WodNetworkResponseItemFactory.makeWodNetworkResponseItem(
-            mmddyyyyDateFormat.format(date)
+            title = mmddyyyyDateFormat.format(date)
         )
 
         // Test
@@ -53,7 +53,7 @@ class WodNetworkResponseItemMapperTest {
     fun mapToWodEntityWithUnknownDateFormatReturnsNull() {
         // Create test values
         val testResponseItem = WodNetworkResponseItemFactory.makeWodNetworkResponseItem(
-            "QQ-${DataFactory.randomString()}" // This should be unparsable
+            title = "QQ-${DataFactory.randomString()}" // This should be unparsable
         )
 
         // Test
